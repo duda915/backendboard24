@@ -34,14 +34,3 @@ class BoardUser (
     }
 }
 
-
-data class UserAuthorities (
-        @ManyToOne(cascade = [CascadeType.MERGE])
-        @JoinColumn(name = "authority_id")
-        val authority: Authority
-) {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
-}
-
