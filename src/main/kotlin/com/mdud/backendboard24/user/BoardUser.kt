@@ -6,14 +6,19 @@ import javax.persistence.*
 @Entity
 @Table(name = "boarduser")
 class BoardUser (
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long?,
-
         @Column(name = "username")
         val username: String,
-        password: String
+        password: String,
+
+        @OneToMany(cascade = arrayOf(CascadeType.ALL))
+        @JoinColumn(name = "user_id")
+        val userAuthorities: MutableSet<UserAuthorities>
+
 ) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null
+
     @Column(name = "password")
     var password: String = setPassword(password)
         set(value) {
@@ -28,3 +33,15 @@ class BoardUser (
         return passwordEncoder.encode(plainPassword)
     }
 }
+
+
+data class UserAuthorities (
+        @ManyToOne(cascade = [CascadeType.MERGE])
+        @JoinColumn(name = "authority_id")
+        val authority: Authority
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null
+}
+
