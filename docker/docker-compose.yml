@@ -1,0 +1,11 @@
+version: "3.5"
+
+services:
+  unittestdb:
+    image: postgres:10
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: board
+      POSTGRES_USER: board
+      POSTGRES_DB: boarddb
