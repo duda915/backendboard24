@@ -14,3 +14,4 @@ data class UserAuthorities (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
 }
+
