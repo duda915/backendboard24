@@ -2,6 +2,8 @@ package com.mdud.backendboard24.user.authority
 
 import javax.persistence.*
 
+@Entity
+@Table(name = "authority")
 data class Authority (
         @Enumerated(EnumType.STRING)
         @Column(name = "authority_name")
@@ -11,6 +13,5 @@ data class Authority (
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null
 }
-
 
 

@@ -10,7 +10,7 @@ class MainInitializer : CommandLineRunner {
         val set = mutableSetOf<Initializer>()
     }
     override fun run(vararg args: String?) {
-
+        set.forEach { it.init() }
     }
 
 }
