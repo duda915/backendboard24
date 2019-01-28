@@ -4,5 +4,5 @@ import com.mdud.backendboard24.user.authority.Authority
 import org.springframework.data.repository.CrudRepository
 
 interface AuthorityRepository : CrudRepository<Authority, Long> {
-    fun findByAuthorityName(authorityName: AuthorityName) : Authority?
+    fun findByAuthorityName(authorityName: AuthorityName) : Authority
 }
