@@ -1,4 +1,4 @@
-package com.mdud.backendboard24.user
+package com.mdud.backendboard24.user.userauthorities
 
 import com.mdud.backendboard24.user.authority.AuthorityName
 import com.mdud.backendboard24.user.authority.AuthorityRepository
@@ -12,3 +12,4 @@ class UserAuthoritiesBuilder @Autowired constructor(
         return UserAuthorities(authority)
     }
 }
+

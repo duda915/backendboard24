@@ -1,5 +1,6 @@
 package com.mdud.backendboard24.user
 
+import com.mdud.backendboard24.user.userauthorities.UserAuthorities
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import javax.persistence.*
 
