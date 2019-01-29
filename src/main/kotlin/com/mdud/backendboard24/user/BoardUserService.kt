@@ -18,7 +18,8 @@ class BoardUserService @Autowired constructor(
     }
 
     private fun throwIfUserExists(username: String) {
-        boardUserRepository.findByUsername(username) ?: throw BoardUserException("user $username already exists")
+        boardUserRepository.findByUsername(username) ?: return
+        throw BoardUserException("user $username already exists")
     }
 
     fun getUser(username: String) : BoardUser {
@@ -56,13 +57,13 @@ class BoardUserService @Autowired constructor(
         return boardUserRepository.save(boardUser)
     }
 
-    fun changePassword(boardUserDTO: BoardUserDTO) : BoardUser {
+    fun changePassword(boardUserDTO: BoardUserDTO) {
         throwIfUserNotExists(boardUserDTO.username)
 
         val boardUser = boardUserRepository.findByUsername(boardUserDTO.username)!!
         boardUser.password = boardUserDTO.plainPassword
 
-        return boardUserRepository.save(boardUser)
+        boardUserRepository.save(boardUser)
     }
 
 }
