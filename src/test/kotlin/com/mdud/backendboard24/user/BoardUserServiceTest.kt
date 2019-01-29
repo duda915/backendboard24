@@ -1,5 +1,6 @@
 package com.mdud.backendboard24.user
 
+import com.mdud.backendboard24.user.authority.AuthorityName
 import org.assertj.core.api.Assertions
 import org.junit.Assert
 import org.junit.Assert.*
@@ -86,5 +87,20 @@ class BoardUserServiceTest {
     fun addUser_AddUserWithEmptyPassword_ShouldThrowException() {
         val userDTO = BoardUserDTO("nonexistinguser", "")
         boardUserService.addUser(userDTO)
+    }
+
+    @Test
+    fun setUserAuthorities_SetUserAuthorities_ShouldSetNewUserAuthorities() {
+        boardUserService.setUserAuthorities("user", mutableSetOf(AuthorityName.ADMIN))
+        val userWithAdminAuthority = boardUserService.getUser("user")
+
+        val act = userWithAdminAuthority.userAuthorities.stream().anyMatch { it.authority.authorityName == AuthorityName.ADMIN }
+
+        assertTrue(act)
+    }
+
+    @Test(expected = BoardUserException::class)
+    fun setUserAuthorities_SetNonExistingUserAuthority_ShouldThrowException() {
+        boardUserService.setUserAuthorities("nonexistinguser", mutableSetOf(AuthorityName.ADMIN))
     }
 }
