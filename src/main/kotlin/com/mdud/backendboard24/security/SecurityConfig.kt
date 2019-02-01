@@ -22,9 +22,6 @@ class SecurityConfig @Autowired constructor(
         @Qualifier("userDetailsServiceImpl") private val userDetailsService: UserDetailsService
 ): WebSecurityConfigurerAdapter() {
 
-    private val REALM = "board"
-    private val SECRET = "board"
-
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder {
         return BCryptPasswordEncoder()
@@ -36,11 +33,6 @@ class SecurityConfig @Autowired constructor(
 
     override fun configure(http: HttpSecurity?) {
         http!!.authorizeRequests().antMatchers("/oauth/token").permitAll()
-                .anyRequest().authenticated().and().formLogin().disable().csrf().disable()
-    }
-
-    @Bean
-    override fun authenticationManagerBean(): AuthenticationManager {
-        return super.authenticationManagerBean()
+                .anyRequest().authenticated().and().formLogin().and().httpBasic()
     }
 }

@@ -9,12 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserDetailsServiceImpl @Autowired constructor(
         private val boardUserRepository: BoardUserRepository
 ) : UserDetailsService {
 
+    @Transactional
     override fun loadUserByUsername(p0: String?): UserDetails {
         p0 ?: throw LoginException("username $p0 is null")
         val boardUser = boardUserRepository.findByUsername(p0) ?: throw UsernameNotFoundException("user $p0 not found")
