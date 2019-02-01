@@ -29,6 +29,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig @Autowired constructor(
         @Qualifier("userDetailsServiceImpl") private val userDetailsService: UserDetailsService
 ): WebSecurityConfigurerAdapter() {
@@ -61,6 +62,10 @@ class OAuth2AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 
     @Autowired
     lateinit var passwordEncoder: BCryptPasswordEncoder
+    
+    @Qualifier("userDetailsServiceImpl")
+    @Autowired
+    lateinit var userDetailsService: UserDetailsService
 
     override fun configure(security: AuthorizationServerSecurityConfigurer?) {
         security!!.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()")
@@ -80,6 +85,7 @@ class OAuth2AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
         endpoints!!.tokenStore(tokenStore())
                 .accessTokenConverter(accessTokenConverter())
                 .authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService)
     }
 
     @Bean
@@ -107,7 +113,6 @@ class OAuth2AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 
 @Configuration
 @EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 class OAuth2ResourceConfiguration : ResourceServerConfigurerAdapter() {
 
 
