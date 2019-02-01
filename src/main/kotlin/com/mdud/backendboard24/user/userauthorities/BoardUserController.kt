@@ -3,6 +3,7 @@ package com.mdud.backendboard24.user.userauthorities
 import com.mdud.backendboard24.user.BoardUser
 import com.mdud.backendboard24.user.BoardUserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,6 +19,7 @@ class BoardUserController @Autowired constructor(
 
     @GetMapping
     @Transactional
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     fun getLoggedUser(principal: Principal) : BoardUser {
         return boardUserService.getUser(principal.name)
     }
